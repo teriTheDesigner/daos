@@ -6,11 +6,15 @@ export default function CreateUserForm() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [city, setCity] = useState("");
+  const [instrument, setInstrument] = useState("");
   const router = useRouter();
 
   const handleNameChange = (e: any) => setName(e.target.value);
   const handleEmailChange = (e: any) => setEmail(e.target.value);
   const handlePasswordChange = (e: any) => setPassword(e.target.value);
+  const handleCityChange = (e: any) => setCity(e.target.value);
+  const handleInstrumentdChange = (e: any) => setInstrument(e.target.value);
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -19,7 +23,11 @@ export default function CreateUserForm() {
       name: name,
       email: email,
       password: password,
+      city: city,
+      instrument: instrument,
     };
+
+    console.log("creating user", user);
 
     const result = await saveUser(user);
     if (result.error) {
@@ -101,6 +109,28 @@ export default function CreateUserForm() {
               name="password"
               value={password}
               onChange={handlePasswordChange}
+              required
+            />
+          </div>
+          <div className="input-field">
+            <label htmlFor="instrument">Instrument</label>
+            <input
+              type="text"
+              id="instrument"
+              name="instrument"
+              value={instrument}
+              onChange={handleInstrumentdChange}
+              required
+            />
+          </div>
+          <div className="input-field">
+            <label htmlFor="city">City</label>
+            <input
+              type="text"
+              id="city"
+              name="city"
+              value={city}
+              onChange={handleCityChange}
               required
             />
           </div>
