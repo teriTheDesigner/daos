@@ -26,4 +26,11 @@ export class UsersService {
       .findByIdAndUpdate(id, updateUserDto, { new: true, upsert: false })
       .exec();
   }
+  async deleteUser(userId: string): Promise<void> {
+    const user = await this.userModel.findById(userId);
+    if (!user) {
+      throw new Error("User not found");
+    }
+    await this.userModel.findByIdAndDelete(userId);
+  }
 }

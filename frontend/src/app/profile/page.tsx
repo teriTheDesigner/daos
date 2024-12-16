@@ -102,9 +102,42 @@ export default function Profile() {
     router.push("/update-profile");
   }
 
-  function deleteProfile() {
-    alert("delete profile");
-  }
+  const deleteProfile = async () => {
+    if (!userData || !userData.id || !token) {
+      alert("Unable to delete profile. Missing user data or token.");
+      return;
+    }
+
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete your profile?",
+    );
+    if (!confirmDelete) return;
+
+    try {
+      const response = await fetch(
+        `http://localhost:3000/users/${userData.id}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+
+      if (response.ok) {
+        alert("Your profile has been deleted successfully.");
+        sessionStorage.removeItem("token");
+        router.push("/login");
+      } else {
+        const errorData = await response.json();
+        alert(`Error deleting profile: ${errorData.message}`);
+      }
+    } catch (error) {
+      console.error("Error deleting profile:", error);
+      alert("An error occurred. Please try again.");
+    }
+  };
+
   return (
     <div>
       <Nav />
