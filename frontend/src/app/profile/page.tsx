@@ -9,6 +9,10 @@ interface User {
   id: string;
   name: string;
   email: string;
+  city: string;
+  instrument: string;
+  createdAt: string;
+  updatedAt: string;
   ensembles?: string[];
 }
 
@@ -112,14 +116,20 @@ export default function Profile() {
               </PrimaryButton>
             </div>
           ) : (
-            <div className="col-start-1 col-end-13 mb-10 mt-12">
-              <div className="flex gap-12 border-b border-gray-200 pb-10">
+            <div className="col-start-1 col-end-13 mb-10 mt-4">
+              <h1
+                className="oswald-medium mb-4 text-4xl"
+                style={{ color: "var(--dark-blue)" }}
+              >
+                Min profil
+              </h1>
+              <div className="flex gap-24 border-b border-gray-200 pb-10">
                 <div className="rounded-xl bg-white p-3 shadow-md shadow-gray-200">
-                  <div className="rounded-lg bg-gray-100 p-12">
+                  <div className="rounded-lg bg-gray-100 p-16">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      width="30.489"
-                      height="31.876"
+                      width="36.489"
+                      height="37.876"
                       viewBox="0 0 30.489 31.876"
                     >
                       <path
@@ -137,8 +147,26 @@ export default function Profile() {
                     style={{ color: "var(--dark-red)" }}
                   >
                     {userData?.name}
-                  </h3>
-                  <p className="text-gray-500">{userData?.email}</p>
+                  </h3>{" "}
+                  <div className="flex flex-col gap-2 text-sm">
+                    <p className="text-gray-500">{userData?.email}</p>
+                    <p className="text-gray-500">City: {userData?.city}</p>
+                    <p className="text-gray-500">
+                      Instrument: {userData?.instrument}
+                    </p>
+                    <p className="text-gray-500">
+                      Account Created At:{" "}
+                      {userData?.createdAt
+                        ? new Date(userData.createdAt).toLocaleString()
+                        : "N/A"}
+                    </p>
+                    <p className="text-gray-500">
+                      Last Updated:{" "}
+                      {userData?.updatedAt
+                        ? new Date(userData.updatedAt).toLocaleString()
+                        : "N/A"}
+                    </p>
+                  </div>
                 </div>
               </div>
               <div className="mb-4 mt-8 flex justify-between">
