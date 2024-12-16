@@ -1,0 +1,62 @@
+.footer {
+  background-color: var(--dark-red);
+  color: white;
+  padding-top: 1rem;
+  padding-bottom: 2rem;
+}
+
+.h4 {
+  font-size: 30px;
+  grid-column: 1/13;
+  margin-block-start: 0.5em;
+  margin-block-end: 0.5em;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.layout {
+  display: flex;
+  grid-column: 1/13;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.socials {
+  display: flex;
+  gap: 1rem;
+}
+
+.links {
+  display: flex;
+  gap: 4rem;
+}
+
+.links a {
+  text-decoration: none;
+  color: white;
+  position: relative;
+}
+
+.links a:hover::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  width: 100%;
+  height: 2px;
+  background-color: white;
+}
+
+.logoImgDiv {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 10px;
+}
+
+.logoImg {
+  width: 300px;
+}

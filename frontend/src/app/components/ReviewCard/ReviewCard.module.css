@@ -1,0 +1,49 @@
+.card {
+  background-color: white;
+  border-radius: 10px;
+  height: 370px;
+  color: var(--dark-blue);
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.reviewText {
+  margin-block-start: 0em;
+  margin-block-end: 0em;
+  text-align: center;
+  font-size: 1.1rem;
+}
+
+.review {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.authorInfo {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  gap: 0.6rem;
+}
+
+.authorImage {
+  width: 80px;
+  align-self: center;
+}
+.authorSubtitle {
+  color: var(--grey-400);
+  opacity: 0.8;
+  margin-block-start: 0em;
+  margin-block-end: 0em;
+}
+
+.authorName {
+  color: var(--dark-red);
+  margin-block-start: 0em;
+  margin-block-end: 0em;
+}

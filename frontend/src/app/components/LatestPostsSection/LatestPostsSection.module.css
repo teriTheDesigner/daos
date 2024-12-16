@@ -1,0 +1,19 @@
+.h2 {
+  font-size: 38px;
+  grid-column: 1/13;
+  color: var(--dark-blue);
+  margin-bottom: 1rem;
+}
+
+.section {
+  padding-top: 3rem;
+  padding-bottom: 5rem;
+}
+
+.postsLayout {
+  grid-column: 1/13;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  justify-content: space-between;
+  gap: 2rem;
+}

@@ -1,0 +1,13 @@
+.section {
+  background-color: var(--dark-blue);
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.mainLayout {
+  grid-column: 4/9;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  color: white;
+}
