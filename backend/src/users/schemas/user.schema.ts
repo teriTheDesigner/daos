@@ -24,6 +24,9 @@ export class User {
 
   @Prop({ type: [{ type: Types.ObjectId, ref: "Ensemble" }] })
   ensembles: Types.ObjectId[];
+
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

@@ -7,32 +7,36 @@ import {
   HttpStatus,
   Request,
   UseGuards,
-} from '@nestjs/common';
-import { AuthService } from './auth.service';
-import { AuthGuard } from './auth.guard';
-import { UsersService } from '../users/users.service';
+} from "@nestjs/common";
+import { AuthService } from "./auth.service";
+import { AuthGuard } from "./auth.guard";
+import { UsersService } from "../users/users.service";
 
-@Controller('auth')
+@Controller("auth")
 export class AuthController {
   constructor(
     private authService: AuthService,
-    private usersService: UsersService,
+    private usersService: UsersService
   ) {}
 
   @HttpCode(HttpStatus.OK)
-  @Post('login')
+  @Post("login")
   signIn(@Body() signInDto: Record<string, any>) {
     return this.authService.signIn(signInDto.name, signInDto.password);
   }
   @UseGuards(AuthGuard)
-  @Get('profile')
+  @Get("profile")
   async getProfile(@Request() req) {
     const user = await this.usersService.findOne(req.user.name);
     return {
       id: user._id,
       name: user.name,
       email: user.email,
+      city: user.city,
+      instrument: user.instrument,
       ensembles: user.ensembles,
+      createdAt: user.createdAt,
+      updatedAt: user.updatedAt,
     };
   }
 }
