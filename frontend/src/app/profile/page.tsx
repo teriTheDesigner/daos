@@ -97,6 +97,14 @@ export default function Profile() {
   const handleLogin = () => {
     router.push("/login");
   };
+
+  function updateProfile() {
+    router.push("/update-profile");
+  }
+
+  function deleteProfile() {
+    alert("delete profile");
+  }
   return (
     <div>
       <Nav />
@@ -123,7 +131,7 @@ export default function Profile() {
               >
                 Min profil
               </h1>
-              <div className="flex gap-24 border-b border-gray-200 pb-10">
+              <div className="flex gap-24 pb-10">
                 <div className="rounded-xl bg-white p-3 shadow-md shadow-gray-200">
                   <div className="rounded-lg bg-gray-100 p-16">
                     <svg
@@ -147,7 +155,7 @@ export default function Profile() {
                     style={{ color: "var(--dark-red)" }}
                   >
                     {userData?.name}
-                  </h3>{" "}
+                  </h3>
                   <div className="flex flex-col gap-2 text-sm">
                     <p className="text-gray-500">{userData?.email}</p>
                     <p className="text-gray-500">City: {userData?.city}</p>
@@ -155,19 +163,35 @@ export default function Profile() {
                       Instrument: {userData?.instrument}
                     </p>
                     <p className="text-gray-500">
-                      Account Created At:{" "}
+                      Account Created At:
                       {userData?.createdAt
                         ? new Date(userData.createdAt).toLocaleString()
-                        : "N/A"}
+                        : ""}
                     </p>
                     <p className="text-gray-500">
                       Last Updated:{" "}
                       {userData?.updatedAt
                         ? new Date(userData.updatedAt).toLocaleString()
-                        : "N/A"}
+                        : ""}
                     </p>
                   </div>
                 </div>
+              </div>
+              <div className="flex w-full gap-8 border-b border-gray-200 pb-10">
+                <PrimaryButton
+                  onClick={updateProfile}
+                  color="white"
+                  size="large"
+                >
+                  Update profile
+                </PrimaryButton>
+                <PrimaryButton
+                  onClick={deleteProfile}
+                  color="white"
+                  size="large"
+                >
+                  Delete profile
+                </PrimaryButton>
               </div>
               <div className="mb-4 mt-8 flex justify-between">
                 <h2
