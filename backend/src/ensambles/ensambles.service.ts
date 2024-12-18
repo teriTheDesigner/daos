@@ -34,6 +34,43 @@ export class EnsemblesService {
     );
   }
 
+  async removeUserFromEnsemble(
+    userId: string,
+    ensembleId: string
+  ): Promise<void> {
+    // Step 1: Remove the user ID from the ensemble's musicians list
+    const ensembleResult = await this.ensembleModel.updateOne(
+      { _id: ensembleId, musicians: userId },
+      { $pull: { musicians: userId } }
+    );
+
+    if (ensembleResult.matchedCount === 0) {
+      throw new NotFoundException(
+        `User with ID ${userId} is not part of ensemble ${ensembleId} or ensemble does not exist.`
+      );
+    }
+
+    console.log(
+      `User ${userId} removed from ensemble ${ensembleId}. Updated count: ${ensembleResult.modifiedCount}`
+    );
+
+    // Step 2: Remove the ensemble ID from the user's ensembles list
+    const userResult = await this.userModel.updateOne(
+      { _id: userId, ensembles: ensembleId },
+      { $pull: { ensembles: ensembleId } }
+    );
+
+    if (userResult.matchedCount === 0) {
+      console.warn(
+        `Ensemble ID ${ensembleId} not found in user ${userId}'s ensembles list.`
+      );
+    }
+
+    console.log(
+      `Ensemble ${ensembleId} removed from user ${userId}'s ensembles list. Updated count: ${userResult.modifiedCount}`
+    );
+  }
+
   async joinEnsemble(userId: string, ensembleId: string) {
     // Step 1: Find the ensemble and add the user to the musicians list
     const ensemble = await this.ensembleModel.findByIdAndUpdate(

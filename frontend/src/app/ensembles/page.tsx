@@ -31,6 +31,8 @@ export default function EnsemblesPage() {
   const [selectedEnsembleId, setSelectedEnsembleId] = useState<string | null>(
     null,
   );
+  const [userEnsembles, setUserEnsembles] = useState<string[]>([]);
+  const [isAlreadyMember, setIsAlreadyMember] = useState(false);
   const [userId, setUserId] = useState<string | null>(null);
   const [token, setToken] = useState<string | null>(null);
 
@@ -52,6 +54,12 @@ export default function EnsemblesPage() {
     }
   }, []);
 
+  useEffect(() => {
+    if (selectedEnsembleId) {
+      checkUserMembership(selectedEnsembleId);
+    }
+  }, [selectedEnsembleId, userEnsembles]);
+
   const fetchUserProfile = async (token: string) => {
     try {
       const response = await fetch("http://localhost:3000/auth/profile", {
@@ -63,6 +71,7 @@ export default function EnsemblesPage() {
       if (response.ok) {
         const data: User = await response.json();
         setUserId(data.id);
+        setUserEnsembles(data.ensembles || []);
       } else {
         const errorData = await response.json();
         alert(`Error fetching user profile: ${errorData.message}`);
@@ -70,6 +79,14 @@ export default function EnsemblesPage() {
     } catch (error) {
       console.error("Error fetching user profile:", error);
       alert("An error occurred. Please try again.");
+    }
+  };
+
+  const checkUserMembership = (ensembleId: string) => {
+    if (userEnsembles.includes(ensembleId)) {
+      setIsAlreadyMember(true);
+    } else {
+      setIsAlreadyMember(false);
     }
   };
 
@@ -102,6 +119,37 @@ export default function EnsemblesPage() {
       }
     } catch (error) {
       console.error("Error joining ensemble:", error);
+      alert("An error occurred. Please try again.");
+    }
+  };
+
+  const handleLeave = async () => {
+    if (!selectedEnsembleId || !userId || !token) {
+      alert("You must be logged in to leave an ensemble.");
+      return;
+    }
+
+    try {
+      const response = await fetch(
+        `http://localhost:3000/ensembles/${userId}/leave/${selectedEnsembleId}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+
+      if (response.ok) {
+        alert(`Successfully left the ensemble. ${selectedEnsembleId}`);
+        closeModal();
+        fetchEnsembles();
+      } else {
+        const errorData = await response.json();
+        alert(`Error: ${errorData.message}`);
+      }
+    } catch (error) {
+      console.error("Error leaving ensemble:", error);
       alert("An error occurred. Please try again.");
     }
   };
@@ -195,16 +243,28 @@ export default function EnsemblesPage() {
             </div>
           )}
         </div>
-      </div>{" "}
-      <Modal
-        isOpen={isModalOpen}
-        onClose={closeModal}
-        onAction={handleJoin}
-        title="Would you like to join this ensemble?"
-        description="By joining this ensemble, you will be able to chat with other members and participate in events."
-        actionButtonText="Join"
-        closeButtonText="Cancel"
-      />
+      </div>
+      {isAlreadyMember ? (
+        <Modal
+          isOpen={isModalOpen}
+          onClose={closeModal}
+          onAction={handleLeave}
+          title="Would you like to leave this ensemble?"
+          description="By leaving this ensemble, you will no longer be able to chat with members or participate in events."
+          actionButtonText="Leave"
+          closeButtonText="Cancel"
+        />
+      ) : (
+        <Modal
+          isOpen={isModalOpen}
+          onClose={closeModal}
+          onAction={handleJoin}
+          title="Would you like to join this ensemble?"
+          description="By joining this ensemble, you will be able to chat with other members and participate in events."
+          actionButtonText="Join"
+          closeButtonText="Cancel"
+        />
+      )}
     </div>
   );
 }
