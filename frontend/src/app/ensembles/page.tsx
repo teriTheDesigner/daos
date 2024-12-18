@@ -196,7 +196,15 @@ export default function EnsemblesPage() {
           )}
         </div>
       </div>{" "}
-      <Modal isOpen={isModalOpen} onClose={closeModal} onJoin={handleJoin} />
+      <Modal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        onAction={handleJoin}
+        title="Would you like to join this ensemble?"
+        description="By joining this ensemble, you will be able to chat with other members and participate in events."
+        actionButtonText="Join"
+        closeButtonText="Cancel"
+      />
     </div>
   );
 }
