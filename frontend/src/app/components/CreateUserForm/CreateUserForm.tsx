@@ -14,7 +14,7 @@ export default function CreateUserForm() {
   const handleEmailChange = (e: any) => setEmail(e.target.value);
   const handlePasswordChange = (e: any) => setPassword(e.target.value);
   const handleCityChange = (e: any) => setCity(e.target.value);
-  const handleInstrumentdChange = (e: any) => setInstrument(e.target.value);
+  const handleInstrumentChange = (e: any) => setInstrument(e.target.value);
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -86,6 +86,7 @@ export default function CreateUserForm() {
               value={name}
               onChange={handleNameChange}
               required
+              placeholder="Sarah Nielsen"
             />
           </div>
 
@@ -98,6 +99,8 @@ export default function CreateUserForm() {
               value={email}
               onChange={handleEmailChange}
               required
+              placeholder="sarah@email.com"
+              minLength={5}
             />
           </div>
 
@@ -110,18 +113,33 @@ export default function CreateUserForm() {
               value={password}
               onChange={handlePasswordChange}
               required
+              placeholder="********"
+              minLength={4}
             />
           </div>
           <div className="input-field">
             <label htmlFor="instrument">Instrument</label>
-            <input
-              type="text"
+            <select
               id="instrument"
               name="instrument"
               value={instrument}
-              onChange={handleInstrumentdChange}
+              onChange={handleInstrumentChange}
               required
-            />
+            >
+              <option value="" disabled>
+                Select an instrument
+              </option>
+              <option value="Guitar">Guitar</option>
+              <option value="Piano">Piano</option>
+              <option value="Violin">Violin</option>
+              <option value="Drums">Drums</option>
+              <option value="Flute">Flute</option>
+              <option value="Saxophone">Saxophone</option>
+              <option value="Bass Guitar">Bass Guitar</option>
+              <option value="Trumpet">Trumpet</option>
+              <option value="Cello">Cello</option>
+              <option value="Clarinet">Clarinet</option>
+            </select>
           </div>
           <div className="input-field">
             <label htmlFor="city">City</label>
@@ -132,6 +150,7 @@ export default function CreateUserForm() {
               value={city}
               onChange={handleCityChange}
               required
+              placeholder="Lyngby"
             />
           </div>
           <PrimaryButton

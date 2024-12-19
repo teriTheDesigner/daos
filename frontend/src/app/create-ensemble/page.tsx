@@ -27,9 +27,7 @@ export default function CreateEnsemblePage() {
     setDescription(e.target.value);
   };
 
-  const handleInstrumentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInstrument(e.target.value);
-  };
+  const handleInstrumentChange = (e: any) => setInstrument(e.target.value);
 
   const handleCityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCity(e.target.value);
@@ -75,6 +73,7 @@ export default function CreateEnsemblePage() {
         setInstrument("");
         setCity("");
         setEnsembleName("");
+        router.push("/ensembles");
       } else {
         alert(`Error: ${data.message}`);
       }
@@ -127,17 +126,30 @@ export default function CreateEnsemblePage() {
                   required
                 />
               </div>
+
               <div className="input-field">
                 <label htmlFor="instrument">Instrument</label>
-                <input
-                  type="text"
+                <select
                   id="instrument"
                   name="instrument"
-                  placeholder="Vælg instrument"
                   value={instrument}
                   onChange={handleInstrumentChange}
                   required
-                />
+                >
+                  <option value="" disabled>
+                    Select an instrument
+                  </option>
+                  <option value="Guitar">Guitar</option>
+                  <option value="Piano">Piano</option>
+                  <option value="Violin">Violin</option>
+                  <option value="Drums">Drums</option>
+                  <option value="Flute">Flute</option>
+                  <option value="Saxophone">Saxophone</option>
+                  <option value="Bass Guitar">Bass Guitar</option>
+                  <option value="Trumpet">Trumpet</option>
+                  <option value="Cello">Cello</option>
+                  <option value="Clarinet">Clarinet</option>
+                </select>
               </div>
               <div className="input-field">
                 <label htmlFor="description">Description</label>
