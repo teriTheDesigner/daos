@@ -4,15 +4,16 @@ import Nav from "../components/Nav/Nav";
 import PrimaryButton from "../components/PrimaryButton/PrimaryButton";
 import { useRouter } from "next/navigation";
 import PostingCard from "../components/PostingCard/PostingCard";
+import Modal from "../components/Modal/Modal";
 
 interface User {
   id: string;
   name: string;
-  email: string;
-  city: string;
-  instrument: string;
-  createdAt: string;
-  updatedAt: string;
+  email?: string;
+  city?: string;
+  instrument?: string;
+  createdAt?: string;
+  updatedAt?: string;
   ensembles?: string[];
 }
 
@@ -32,6 +33,14 @@ export default function Profile() {
   const [token, setToken] = useState<string | null>(null);
   const router = useRouter();
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedEnsembleId, setSelectedEnsembleId] = useState<string | null>(
+    null,
+  );
+  const [userEnsembles, setUserEnsembles] = useState<string[]>([]);
+
+  const [userId, setUserId] = useState<string | null>(null);
+
   useEffect(() => {
     const storedToken = sessionStorage.getItem("token");
     setToken(storedToken);
@@ -42,7 +51,14 @@ export default function Profile() {
     }
   }, []);
 
+  const openModal = (ensembleId: string) => {
+    setSelectedEnsembleId(ensembleId);
+    setIsModalOpen(true);
+  };
+  const closeModal = () => setIsModalOpen(false);
+
   const fetchUserProfile = async (token: string) => {
+    console.log("Fetching user profile...");
     try {
       const response = await fetch("http://localhost:3000/auth/profile", {
         headers: {
@@ -53,6 +69,7 @@ export default function Profile() {
       if (response.ok) {
         const data: User = await response.json();
         setUserData(data);
+        setUserId(data.id);
 
         if (data.ensembles && data.ensembles.length > 0) {
           fetchEnsembles(data.ensembles, token);
@@ -87,6 +104,37 @@ export default function Profile() {
       setEnsembles(fetchedEnsembles);
     } catch (error) {
       console.error("Error fetching ensembles:", error);
+    }
+  };
+
+  const handleLeave = async () => {
+    if (!selectedEnsembleId || !userId || !token) {
+      alert("You must be logged in to leave an ensemble.");
+      return;
+    }
+
+    try {
+      const response = await fetch(
+        `http://localhost:3000/ensembles/${userId}/leave/${selectedEnsembleId}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+
+      if (response.ok) {
+        alert(`Successfully left the ensemble. ${selectedEnsembleId}`);
+        closeModal();
+        window.location.reload();
+      } else {
+        const errorData = await response.json();
+        alert(`Error: ${errorData.message}`);
+      }
+    } catch (error) {
+      console.error("Error leaving ensemble:", error);
+      alert("An error occurred. Please try again.");
     }
   };
 
@@ -244,7 +292,10 @@ export default function Profile() {
               <div className="grid grid-cols-3 gap-6 py-8">
                 {ensembles.length > 0 ? (
                   ensembles.map((ensemble) => (
-                    <div key={ensemble._id}>
+                    <div
+                      key={ensemble._id}
+                      onClick={() => openModal(ensemble._id)}
+                    >
                       <PostingCard
                         title={ensemble.title}
                         description={ensemble.description}
@@ -286,6 +337,16 @@ export default function Profile() {
           )}
         </div>
       </div>
+
+      <Modal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        onAction={handleLeave}
+        title="Would you like to leave this ensemble?"
+        description="By leaving this ensemble, you will no longer be able to chat with members or participate in events."
+        actionButtonText="Leave"
+        closeButtonText="Cancel"
+      />
     </div>
   );
 }
