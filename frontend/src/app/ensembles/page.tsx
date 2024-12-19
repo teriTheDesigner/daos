@@ -14,6 +14,7 @@ interface Ensemble {
   city: string;
   ensembleName: string;
   instrument: string;
+  musicians?: string[];
 }
 
 interface User {
@@ -237,6 +238,7 @@ export default function EnsemblesPage() {
                         instrument={ensemble.instrument}
                         date="09-01-2025"
                         location={ensemble.city}
+                        musicians={ensemble.musicians}
                       />
                     </div>
                   ))
