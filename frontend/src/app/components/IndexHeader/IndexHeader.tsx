@@ -1,11 +1,12 @@
 "use client";
-
+import { useRouter } from "next/navigation";
 import PrimaryButton from "../PrimaryButton/PrimaryButton";
 import styles from "./IndexHeader.module.css";
 
 export default function IndexHeader() {
+  const router = useRouter();
   function headerClick() {
-    alert("hello from header button");
+    router.push("/ensembles");
   }
 
   return (
