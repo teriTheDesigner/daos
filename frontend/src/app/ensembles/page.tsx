@@ -113,6 +113,8 @@ export default function EnsemblesPage() {
         alert("Successfully joined the ensemble!");
         closeModal();
         fetchEnsembles();
+        fetchUserProfile(token);
+        checkUserMembership(selectedEnsembleId);
       } else {
         const errorData = await response.json();
         alert(`Error: ${errorData.message}`);
@@ -144,6 +146,8 @@ export default function EnsemblesPage() {
         alert(`Successfully left the ensemble. ${selectedEnsembleId}`);
         closeModal();
         fetchEnsembles();
+        fetchUserProfile(token);
+        checkUserMembership(selectedEnsembleId);
       } else {
         const errorData = await response.json();
         alert(`Error: ${errorData.message}`);
