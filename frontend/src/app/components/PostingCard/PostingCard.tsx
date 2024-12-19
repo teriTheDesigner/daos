@@ -7,6 +7,7 @@ interface PostingCardProps {
   date?: string;
   location?: string;
   description?: string;
+  musicians?: string[];
 }
 
 export default function PostingCard({
@@ -16,6 +17,7 @@ export default function PostingCard({
   date,
   location,
   description,
+  musicians,
 }: PostingCardProps) {
   return (
     <div className={`${styles.card} `}>
@@ -30,15 +32,14 @@ export default function PostingCard({
           <p>
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="13.887"
-              height="13.887"
-              viewBox="0 0 13.887 13.887"
+              width="16"
+              height="16"
+              fill="currentColor"
+              viewBox="0 0 16 16"
             >
               <path
-                id="author-icon"
-                d="M24.095,13.887H10.207a1.47,1.47,0,0,1,.233-.971A6.9,6.9,0,0,1,13.2,11.138a11.1,11.1,0,0,1,3.954-.851,11.1,11.1,0,0,1,3.954.851,6.906,6.906,0,0,1,2.757,1.778,1.515,1.515,0,0,1,.233.971ZM17.152,8.358a3.731,3.731,0,0,1-2.679-1.13A3.868,3.868,0,0,1,13.362,4.5V3.858a3.868,3.868,0,0,1,1.11-2.728,3.742,3.742,0,0,1,5.359,0,3.868,3.868,0,0,1,1.11,2.728V4.5a3.868,3.868,0,0,1-1.11,2.728A3.731,3.731,0,0,1,17.152,8.358Z"
-                transform="translate(-10.207)"
-                fill="#777"
+                fillRule="evenodd"
+                d="M2.5 11.5A.5.5 0 0 1 3 11h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 7h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 3h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"
               />
             </svg>
             &nbsp;&nbsp;&nbsp;{author}
@@ -59,6 +60,26 @@ export default function PostingCard({
             </svg>
             &nbsp;&nbsp;&nbsp;{instrument}
           </p>
+          {musicians?.length !== undefined && (
+            <div className={`${styles.info} montserrat-regular`}>
+              <p>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="13.887"
+                  height="13.887"
+                  viewBox="0 0 13.887 13.887"
+                >
+                  <path
+                    id="author-icon"
+                    d="M24.095,13.887H10.207a1.47,1.47,0,0,1,.233-.971A6.9,6.9,0,0,1,13.2,11.138a11.1,11.1,0,0,1,3.954-.851,11.1,11.1,0,0,1,3.954.851,6.906,6.906,0,0,1,2.757,1.778,1.515,1.515,0,0,1,.233.971ZM17.152,8.358a3.731,3.731,0,0,1-2.679-1.13A3.868,3.868,0,0,1,13.362,4.5V3.858a3.868,3.868,0,0,1,1.11-2.728,3.742,3.742,0,0,1,5.359,0,3.868,3.868,0,0,1,1.11,2.728V4.5a3.868,3.868,0,0,1-1.11,2.728A3.731,3.731,0,0,1,17.152,8.358Z"
+                    transform="translate(-10.207)"
+                    fill="#777"
+                  />
+                </svg>
+                &nbsp;&nbsp;&nbsp;{musicians.length}&nbsp;/&nbsp;5
+              </p>
+            </div>
+          )}
         </div>
       </div>
       <p className={`${styles.dateLocation} montserrat-regular`}>
