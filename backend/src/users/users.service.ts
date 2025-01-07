@@ -33,4 +33,8 @@ export class UsersService {
     }
     await this.userModel.findByIdAndDelete(userId);
   }
+
+  async deleteAll(): Promise<void> {
+    await this.userModel.deleteMany({});
+  }
 }

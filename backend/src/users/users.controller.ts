@@ -15,8 +15,8 @@ import { UsersService } from "./users.service";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { User } from "./schemas/user.schema";
 import { UpdateUserDto } from "./dto/update-user.dto";
-import { EnsemblesService } from "src/ensambles/ensambles.service";
-import { AuthGuard } from "src/auth/auth.guard";
+import { EnsemblesService } from "../ensambles/ensambles.service";
+import { AuthGuard } from "../auth/auth.guard";
 
 @Controller("users")
 export class UsersController {
