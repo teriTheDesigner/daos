@@ -1,4 +1,4 @@
-# 🎵 Ensemble Management App
+# 🎵 Ensemble Management Application
 
 Welcome to the **Ensemble Management Application**, a full-stack project split into two parts:
 
