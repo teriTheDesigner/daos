@@ -27,17 +27,20 @@ describe("Users Controller", () => {
   });
 
   it("/users (POST) - create a new user", async () => {
+    //  1) Arrange : Set up data for the test
     const userDto = {
       name: "Susanne Nielsen",
       email: "susanne@email.com",
       password: "secret",
     };
 
+    //   2) Act : Execute the action to be tested
     const response = await request(app.getHttpServer())
       .post("/users")
       .send(userDto)
       .expect(201);
 
+    //    3) Assert : Check if the action works as expected
     expect(response.body).toHaveProperty("_id");
     expect(response.body.name).toBe(userDto.name);
     expect(response.body.email).toBe(userDto.email);

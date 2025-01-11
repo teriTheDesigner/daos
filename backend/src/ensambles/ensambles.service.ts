@@ -29,8 +29,8 @@ export class EnsemblesService {
 
   async removeUserFromEnsembles(userId: string): Promise<void> {
     await this.ensembleModel.updateMany(
-      { musicians: userId },
-      { $pull: { musicians: userId } }
+      { musicians: userId }, //looks for ensembles where the musicians array contains the userId
+      { $pull: { musicians: userId } } //remove the userId from the musicians array in those ensembles
     );
   }
 
